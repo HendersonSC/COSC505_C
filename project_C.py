@@ -1,3 +1,4 @@
+#! python3
 # COSC 505: Summer 2019
 # ProjectC - Group 14
 # Damilola Olayinka Akamo
@@ -8,9 +9,21 @@
 # 08/01/2019
 import argparse
 import pandas as pd
+from itertools import product
 from urllib.error import URLError
 
+### Code for output ###
+#Should expect to get the sequence and the position
+
+
 ### Code for Data Analysis ###
+#Need something to come up with all possible sequences
+    #should also end sequences once the become non viable
+def check_Correlations(base_string):
+    print(base_string)
+#Need something to iterate over all positions
+#Need something to check identified patients ailments
+#Would decrease memory footprint if the output was tied to the search
 
 ### Code for for serving http request and getting data ###
 #shende25
@@ -30,10 +43,6 @@ def get_dataset(url):
         return None
     else:
         return df
-
-### Code for output ###
-
-
 
 ### Code for parsing input ###
 #shende25
@@ -56,3 +65,5 @@ def setup():
 #shend25
 if __name__ == "__main__":
     df,outfile = setup()
+    for x in product('AB',repeat=2):
+        check_Correlations(''.join(x))
