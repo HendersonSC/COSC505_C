@@ -15,15 +15,34 @@ from urllib.error import URLError
 ### Code for output ###
 #Should expect to get the sequence and the position
 
-
 ### Code for Data Analysis ###
-#Need something to come up with all possible sequences
-    #should also end sequences once the become non viable
-def check_Correlations(base_string):
-    print(base_string)
-#Need something to iterate over all positions
 #Need something to check identified patients ailments
-#Would decrease memory footprint if the output was tied to the search
+def check_Correlations(df,base_string):
+    match = False
+    base = base_string + 'A'
+    for n in range(len(df.dna.iloc[0])-len(base_string)):
+        reg_exper = r'(^[AB]{'+str(n)+'}'+base+')'
+        ds = df.dna.str.match(reg_exper)
+        cnts = ds.value_counts()
+        if cnts.get(True) and cnts.get(True) > 2:
+            print(reg_exper)
+            print(cnts.get(True))
+            match = True
+    if match:
+        check_Correlations(df,base)
+
+    match = False
+    base = base_string + 'B'
+    for n in range(len(df.dna.iloc[0])-len(base_string)):
+        reg_exper = r'(^[AB]{'+str(n)+'}'+base+')'
+        ds = df.dna.str.match(reg_exper)
+        cnts = ds.value_counts()
+        if cnts.get(True) and cnts.get(True) > 2:
+            print(reg_exper)
+            print(cnts.get(True))
+            match = True
+    if match:
+        check_Correlations(df,base)
 
 ### Code for for serving http request and getting data ###
 #shende25
@@ -57,13 +76,11 @@ def setup():
             type=argparse.FileType('w'), \
             help="Location for writing output, '-' will direct to stdout")
     args = parser.parse_args()
-    print(args.output)
-    print(args.data,file=args.output[0])
-    return args.data,args.output[0]
+    return args.data[0],args.output[0]
 
 ### Default usage
 #shend25
 if __name__ == "__main__":
     df,outfile = setup()
     for x in product('AB',repeat=2):
-        check_Correlations(''.join(x))
+        check_Correlations(df,''.join(x))
