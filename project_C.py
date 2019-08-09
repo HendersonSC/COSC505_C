@@ -37,16 +37,16 @@ ailment_map = {
 def write_Output(dna,n, all_ids, ailments):
     global outfile
     # Printing the DNA sequence
-    print("Sequence : " + dna + "\tlocation : ", n, file=outfile)
+    print(f'\t\tSequence : {dna:{25}} location : {n:{3}}', file=outfile)
     for disea in ailments:
         for corre in ailments[disea]:
             # Printing the disease and the related correlation
-            print("    %s: %s" % (disea, corre), file=outfile)
+            print(f'{disea:{20}} {corre:{30}}', file=outfile)
             # Identities that correlate to each disease
-            print("\t",str(ailments[disea][corre]).strip("[]"), file=outfile)
+            print(f'{str(ailments[disea][corre]).strip("[]"):{80}}\n', file=outfile)
     # Printing all IDs associated with the search sequence
-    print("    All IDs with sequence:", file=outfile)
-    print("\t",str(all_ids).strip("[]"), file=outfile)
+    print(f'All IDs with sequence :', file=outfile)
+    print(f'{str(all_ids).strip("[]"):{80}}\n\n', file=outfile)
 
 ### Code for Data Analysis ###
 #dakamo
@@ -140,7 +140,7 @@ def test(df):
     if not (df.dna.str.len() == 120).all():
         print ("DNA sequences do not contain the correct number of values.")
         return False
-    if not (df.dna.str.contains('^[AB]{120}$')).any():
+    if not (df.dna.str.contains('^[AB]{120}$')).all():
         print ("DNA sequences do not contain the correct characters.")
         return False
     return True
@@ -163,7 +163,7 @@ def setup():
     return args.data[0],args.output[0]
 
 ### Default usage
-#shende25
+#ncallais
 # This has one loop which rolls over the combinations 'AA','AB','BA','BB'
 # We will call this O(n) but n is defined to be 4 and it is done twice
 if __name__ == "__main__":
