@@ -25,10 +25,26 @@ ailment_map = {
         "D" : "Macular Degeneration"
               }
 
-### Code for output ###
-def write_Output(dna,n,all_ids,ailments):
+
+#sfatokun
+# Function Analysis:
+# Nested for loop.
+# First loop is O(n) for the worst case
+# Second loop iterates O(n) per n in the first loop
+# Timing: O(n^2)
+def write_Output(dna,n, all_ids, ailments):
     global outfile
-    print(dna,n,all_ids,ailments,file=outfile)
+    # Printing the DNA sequence
+    print("Sequence : " + dna + "\tlocation : ", n, file=outfile)
+    for disea in ailments:
+        for corre in ailments[disea]:
+            # Printing the disease and the related correlation
+            print("    %s: %s" % (disea, corre), file=outfile)
+            # Identities that correlate to each disease
+            print("\t",str(ailments[disea][corre]).strip("[]"), file=outfile)
+    # Printing all IDs associated with the search sequence
+    print("    All IDs with sequence:", file=outfile)
+    print("\t",str(all_ids).strip("[]"), file=outfile)
 
 ### Code for Data Analysis ###
 # This is O(n) on the number of diseases considered
